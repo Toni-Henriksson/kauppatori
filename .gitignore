@@ -1,2 +1,4 @@
-/node_modules
-.env
+/kauppapaikka/node_modules
+/server/node_modules
+/kauppapaikka/.env
+/server/.env
