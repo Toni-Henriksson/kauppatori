@@ -3,4 +3,5 @@ export interface listedItem{
     price: string;
     details: string;
     date: string;
+    imageurls: Array<string>;
 }

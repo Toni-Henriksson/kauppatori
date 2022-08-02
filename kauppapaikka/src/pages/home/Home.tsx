@@ -56,6 +56,7 @@ const Home: React.FunctionComponent<Props> = () => {
                   title={item.title}
                   price={item.price}
                   date={item.date}
+                  imageurls={item.imageurls}
                 ></Item>
               </div>
             );

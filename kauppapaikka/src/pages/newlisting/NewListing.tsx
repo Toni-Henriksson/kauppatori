@@ -50,7 +50,6 @@ const NewListing: React.FunctionComponent<NewListingProps> = () => {
     setLoading(true);
     let verified = checkStrongIdentification(getAuth().currentUser?.uid);
     let verifiedEmail = checkEmailVerified();
-    //console.log(images);
 
     let urls = await imgUp(images).then((response) => {
       if (verified && verifiedEmail) {
