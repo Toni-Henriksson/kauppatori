@@ -4,7 +4,7 @@ interface FooterSimpleProps {}
 const FooterSimple: React.FunctionComponent<FooterSimpleProps> = () => {
   return (
     <Footer container={true}>
-      <div className="w-full text-center">
+      <div className="w-[90%] text-center">
         <div className="w-full justify-between sm:flex sm:items-center sm:justify-between">
           <Footer.Brand
             href="https://kauppapaikka.com"

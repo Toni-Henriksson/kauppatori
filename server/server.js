@@ -19,7 +19,7 @@ app.get("/getItems", (req, res) => {
         } else {
             res.json(result);
         }
-    });
+    }).skip(req.query.next).limit(6);
 });
 
 // Endpoint to add item for sale

@@ -11,20 +11,44 @@ interface Props {}
 
 const Home: React.FunctionComponent<Props> = () => {
   const [items, setItems] = useState<listedItem[]>([]);
+  const [next, setNext] = useState(0);
+
+  const postsPerPage = 6;
 
   useEffect(() => {
-    fetchItemData();
+    fetchItemData(next);
   }, []);
 
-  const fetchItemData = async () => {
-    axios.get("http://localhost:3001/getItems", {}).then((response) => {
-      setItems(response.data);
-    });
+  const fetchItemData = async (next: number) => {
+    axios
+      .get("http://localhost:3001/getItems", { params: { next } })
+      .then((response) => {
+        setItems(response.data);
+      });
+  };
+
+  const handlePagination = (numOfPages: number) => {
+    let i = next + numOfPages;
+    if (i >= 0) {
+      setNext(i);
+      fetchItemData(i);
+    }
   };
 
   return (
     <div>
       <CarouselComponent></CarouselComponent>
+      <div className="flex justify-center mt-5">
+        <Button
+          color="dark"
+          onClick={() => {
+            window.location.href = "newlisting";
+          }}
+        >
+          {" "}
+          JÄTÄ ILMOITUS{" "}
+        </Button>
+      </div>
       <div className="flex justify-center mt-5">
         <Button.Group>
           <Button color="gray">Elektroniikka</Button>
@@ -32,43 +56,43 @@ const Home: React.FunctionComponent<Props> = () => {
           <Button color="gray">Koti ja asuminen</Button>
           <Button color="gray">Muut</Button>
         </Button.Group>
-        <div className="ml-10">
-          <Button
-            gradientDuoTone="purpleToBlue"
-            onClick={() => {
-              window.location.href = "newlisting";
-            }}
-          >
-            {" "}
-            Jätä ilmoitus{" "}
-          </Button>
-        </div>
       </div>
       <div className="flex justify-center my-5">
-        <div className="w-3/4 max-w-5xl h-3/4 border-2 flex flex-wrap gap-x-6 gap-y-6 justify-center">
-          {items?.map((item, id) => {
-            return (
-              <div
-                key={id}
-                style={{ width: "210px", border: "2px solid gray" }}
-              >
-                <Item
-                  title={item.title}
-                  price={item.price}
-                  date={item.date}
-                  imageurls={item.imageurls}
-                ></Item>
-              </div>
-            );
-          })}
+        <div className="w-[95%] flex justify-center">
+          <div className="max-w-5xl min-w-[350px] border-2 rounded-lg flex flex-wrap gap-x-6 gap-y-6 justify-center content-start p-2">
+            {items?.map((item, id) => {
+              return (
+                <div
+                  key={id}
+                  className="w-[80%]  min-w-[340px] h-[185px] border-2 rounded-lg"
+                >
+                  <Item
+                    title={item.title}
+                    price={item.price}
+                    date={item.date}
+                    imageurls={item.imageurls}
+                  ></Item>
+                </div>
+              );
+            })}
+          </div>
         </div>
       </div>
       <div className="flex justify-center mb-5">
-        <Pagination
-          currentPage={1}
-          totalPages={100}
-          onPageChange={() => console.log("Page change")}
-        />
+        <div className="mr-5">
+          <Button
+            outline={true}
+            color="light"
+            onClick={() => handlePagination(-postsPerPage)}
+          >
+            Edellinen sivu
+          </Button>
+        </div>
+        <div className="ml-5">
+          <Button color="light" onClick={() => handlePagination(postsPerPage)}>
+            Seuraava sivu
+          </Button>
+        </div>
       </div>
     </div>
   );
