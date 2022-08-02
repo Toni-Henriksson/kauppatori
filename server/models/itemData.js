@@ -25,6 +25,10 @@ const itemsDataSchema = new mongoose.mongoose.Schema({
     owner: {
         type: String,
         required: true,
+    },
+    imageurls: {
+        type: Array,
+        required: true,
     }
 });
 

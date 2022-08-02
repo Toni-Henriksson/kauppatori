@@ -5,6 +5,7 @@ import ReactDOM from "react-dom";
 
 import axios from "axios";
 import { getAuth } from "firebase/auth";
+import { imgUp } from "../../util/imageUpload";
 
 import {
   Button,
@@ -26,6 +27,8 @@ interface NewListingProps {}
 
 const NewListing: React.FunctionComponent<NewListingProps> = () => {
   let navigation = useNavigate();
+  const [images, setImages]: any = useState([]);
+  const [imgUrls, setImgUrls] = useState([]);
 
   const [loading, setLoading] = useState(false);
   const [state, setState] = useState({
@@ -43,26 +46,30 @@ const NewListing: React.FunctionComponent<NewListingProps> = () => {
     });
   };
 
-  const submitForm = () => {
+  const submitForm = async () => {
     setLoading(true);
     let verified = checkStrongIdentification(getAuth().currentUser?.uid);
     let verifiedEmail = checkEmailVerified();
+    //console.log(images);
 
-    if (verified && verifiedEmail) {
-      axios
-        .post("http://localhost:3001/createListing", {
-          title: state.title,
-          category: state.category,
-          price: state.price,
-          details: state.info,
-          date: "10.01.1992",
-          owner: "userEmail",
-        })
-        .then(() => {
-          navigation("/");
-          setLoading(false);
-        });
-    }
+    let urls = await imgUp(images).then((response) => {
+      if (verified && verifiedEmail) {
+        axios
+          .post("http://localhost:3001/createListing", {
+            title: state.title,
+            category: state.category,
+            price: state.price,
+            details: state.info,
+            date: "10.01.1992",
+            owner: "userEmail",
+            imageurls: response,
+          })
+          .then(() => {
+            navigation("/");
+            setLoading(false);
+          });
+      }
+    });
   };
 
   return (
@@ -155,9 +162,17 @@ const NewListing: React.FunctionComponent<NewListingProps> = () => {
           </div>
           <div id="fileUpload">
             <div className="mb-2 block">
-              <Label htmlFor="file" value="Lataa kuvia" />
+              <Label value="Lataa kuvia" htmlFor="multiple_files" />
             </div>
-            <FileInput id="file" helperText="JPG, PNG" />
+            <FileInput
+              id="multiple_files"
+              helperText="JPG, PNG"
+              typeof="file"
+              onChange={(e) => {
+                var files = e.target.files;
+                setImages(...images, files);
+              }}
+            />
           </div>
           {loading ? (
             <LoadingButton></LoadingButton>
