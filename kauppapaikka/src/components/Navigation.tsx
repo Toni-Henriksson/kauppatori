@@ -24,7 +24,7 @@ const Navigation: React.FunctionComponent<Props> = () => {
     window.location.href = "profile";
   };
   return (
-    <div className="sticky top-0 z-50">
+    <div className="sticky top-0 z-50 shadow-md">
       <Navbar fluid={true} rounded={true}>
         <Navbar.Brand href="/">
           <img

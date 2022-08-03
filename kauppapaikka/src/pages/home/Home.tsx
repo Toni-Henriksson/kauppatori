@@ -59,12 +59,12 @@ const Home: React.FunctionComponent<Props> = () => {
       </div>
       <div className="flex justify-center my-5">
         <div className="w-[95%] flex justify-center">
-          <div className="max-w-5xl min-w-[350px] border-2 rounded-lg flex flex-wrap gap-x-6 gap-y-6 justify-center content-start p-2">
+          <div className="max-w-5xl min-w-[350px] border-2 rounded-lg flex flex-wrap gap-x-6 gap-y-6 justify-center content-start p-2 shadow-sm">
             {items?.map((item, id) => {
               return (
                 <div
                   key={id}
-                  className="w-[80%]  min-w-[340px] h-[185px] border-2 rounded-lg"
+                  className="w-[80%]  min-w-[340px] h-[185px] border-2 rounded-lg shadow-sm"
                 >
                   <Item
                     title={item.title}
