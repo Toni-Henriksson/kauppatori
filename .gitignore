@@ -1,7 +1,8 @@
 /kauppapaikka/node_modules
 /kauppapaikka/.env
-/kauppapaikka/src/firebase/firebase.js
 /server/node_modules
 /server/.env
 
-
+\kauppapaikka\src\firebase\firebase.js
+kauppapaikka\src\firebase\firebase.js
+/kauppapaikka/src/firebase/firebase.js
