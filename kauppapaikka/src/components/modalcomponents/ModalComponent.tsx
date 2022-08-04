@@ -23,17 +23,21 @@ const ModalComponent: React.FunctionComponent<ModalComponentProps> = ({
 }) => {
   if (!visible) return null;
   return (
-    <div className="fixed left-0 top-0 w-screen h-full bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center">
-      <div className="bg-white p-2 rounded w-[50%] min-w-[300px] h-[50%]">
-        <h1>Modal</h1>
+    <div className="fixed left-0 top-10 w-screen h-full bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center">
+      <div className="flex-column justify-center bg-white p-2 rounded w-[95%] max-w-[1200px] h-[85%] relative ">
         <ListedItem itemInformation={content}></ListedItem>
-        <Button
-          onClick={() => {
-            setVisible(!visible);
-          }}
-        >
-          Sulje
-        </Button>
+        <div className="absolute top-1 right-1">
+          <Button
+            color={"dark"}
+            size={"sm"}
+            pill={true}
+            onClick={() => {
+              setVisible(!visible);
+            }}
+          >
+            ✖
+          </Button>
+        </div>
       </div>
     </div>
   );
