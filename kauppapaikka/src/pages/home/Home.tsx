@@ -1,17 +1,29 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
 import CarouselComponent from "../../components/CarouselComponent";
 import Item from "../../components/Item";
 import { listedItem } from "../../interfaces/interfaces";
-import { Button, Pagination } from "flowbite-react";
+import { Button, Pagination, Modal } from "flowbite-react";
 
 import axios from "axios";
+import ModalComponent from "../../components/modalcomponents/ModalComponent";
 
 interface Props {}
 
 const Home: React.FunctionComponent<Props> = () => {
   const [items, setItems] = useState<listedItem[]>([]);
   const [next, setNext] = useState(0);
+
+  const [visible, setVisible] = useState(false);
+  const [modalItem, setModalItem] = useState({
+    title: "",
+    price: "",
+    details: "",
+    date: "",
+    category: "",
+    owner: "",
+    imageurls: [],
+  });
 
   const postsPerPage = 6;
 
@@ -35,8 +47,13 @@ const Home: React.FunctionComponent<Props> = () => {
     }
   };
 
+  const modalHandler = (item: any) => {
+    setModalItem(item);
+    setVisible(!visible);
+  };
+
   return (
-    <div>
+    <div className="w-[97%]">
       <CarouselComponent></CarouselComponent>
       <div className="flex justify-center mt-5">
         <Button
@@ -49,7 +66,7 @@ const Home: React.FunctionComponent<Props> = () => {
           JÄTÄ ILMOITUS{" "}
         </Button>
       </div>
-      <div className="flex justify-center mt-5">
+      <div className="flex justify-center my-5">
         <Button.Group>
           <Button color="gray">Elektroniikka</Button>
           <Button color="gray">Vaatetus</Button>
@@ -58,13 +75,16 @@ const Home: React.FunctionComponent<Props> = () => {
         </Button.Group>
       </div>
       <div className="flex justify-center my-5">
-        <div className="w-[95%] flex justify-center">
-          <div className="max-w-5xl min-w-[350px] border-2 rounded-lg flex flex-wrap gap-x-6 gap-y-6 justify-center content-start p-2 shadow-sm">
+        <div className="flex justify-center">
+          <div className="w-[95%] max-w-5xl border-2 rounded-lg flex flex-wrap gap-x-6 gap-y-6 justify-center content-start p-2 shadow-sm">
             {items?.map((item, id) => {
               return (
                 <div
                   key={id}
-                  className="w-[80%]  min-w-[340px] h-[185px] border-2 rounded-lg shadow-sm"
+                  className="w-[80%]  min-w-[350px] h-[185px] border-2 rounded-lg shadow-sm"
+                  onClick={() => {
+                    modalHandler(item);
+                  }}
                 >
                   <Item
                     title={item.title}
@@ -93,6 +113,13 @@ const Home: React.FunctionComponent<Props> = () => {
             Seuraava sivu
           </Button>
         </div>
+      </div>
+      <div>
+        <ModalComponent
+          visible={visible}
+          setVisible={setVisible}
+          content={modalItem}
+        ></ModalComponent>
       </div>
     </div>
   );
