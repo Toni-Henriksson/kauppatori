@@ -29,7 +29,7 @@ const NewListing: React.FunctionComponent<NewListingProps> = () => {
   let navigation = useNavigate();
   const [images, setImages]: any = useState([]);
   const [imgUrls, setImgUrls] = useState([]);
-
+  const [imageInput, setImageInput] = useState({});
   const [loading, setLoading] = useState(false);
   const [state, setState] = useState({
     title: "",
@@ -45,6 +45,8 @@ const NewListing: React.FunctionComponent<NewListingProps> = () => {
       [e.target.name]: value,
     });
   };
+
+  const handleImages = () => {};
 
   const submitForm = async () => {
     setLoading(true);

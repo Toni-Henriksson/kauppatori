@@ -9,7 +9,7 @@ require("dotenv").config();
 app.use(express.json());
 app.use(cors());
 
-mongoose.connect("mongodb+srv://tonba:Asted9292@cluster-kauppapaikka.qzja2.mongodb.net/kauppapaikka?retryWrites=true&w=majority");
+mongoose.connect(process.env.MONGO_URL);
 
 // Endpoint gets all items listed for sale
 app.get("/getItems", (req, res) => {
