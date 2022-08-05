@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-import { Navbar, Button, Avatar, Dropdown, TextInput } from "flowbite-react";
+import React, {useState} from "react";
+import {Navbar, Button, Dropdown, TextInput} from "flowbite-react";
 
-import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { initializeApp } from "firebase/app";
-import { firebaseConfig } from "../firebase/firebase";
-import { useNavigate } from "react-router-dom";
-import { logout } from "../firebase/functions";
+import {getAuth, onAuthStateChanged} from "firebase/auth";
+import {initializeApp} from "firebase/app";
+import {firebaseConfig} from "../firebase/firebase";
+import {useNavigate} from "react-router-dom";
+import {logout} from "../firebase/functions";
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
@@ -34,17 +34,18 @@ const Navigation: React.FunctionComponent<Props> = () => {
           />
           <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
             {" "}
-            Kauppatori{" "}
+            Nettikirppari{" "}
           </span>
         </Navbar.Brand>
-        <div className="flex justify-center">
-          <TextInput placeholder="Hae ilmoitusta"></TextInput>
-          <Button>Hae</Button>
-        </div>
         {userLoggedIn ? (
           <div className="flex md:order-2 z-10">
             <div>
               <Dropdown label="Profiili">
+                <Dropdown.Header>
+                  <span className="block truncate text-sm font-medium">
+                    {auth.currentUser?.email}
+                  </span>
+                </Dropdown.Header>
                 <Dropdown.Item
                   onClick={() => {
                     navigate();

@@ -5,7 +5,7 @@ interface Props {}
 const CarouselComponent: React.FunctionComponent<Props> = () => {
   return (
     <>
-      <div className="flex justify-center w-screen">
+      <div className="flex justify-center w-[350px] md:w-[800px] 2xl:w-[1500px]">
         <div className="w-[100%] h-56 sm:h-64 xl:h-80 2xl:h-96 m-3">
           <Carousel slideInterval={10000}>
             <img

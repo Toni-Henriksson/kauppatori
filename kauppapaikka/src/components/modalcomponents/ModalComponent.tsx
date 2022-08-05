@@ -23,8 +23,8 @@ const ModalComponent: React.FunctionComponent<ModalComponentProps> = ({
 }) => {
   if (!visible) return null;
   return (
-    <div className="fixed left-0 top-10 w-screen h-full bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center">
-      <div className="flex-column justify-center bg-white p-2 rounded w-[95%] max-w-[1200px] h-[85%] relative ">
+    <div className="fixed left-0 top-10 w-[100%] h-[100%] bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center">
+      <div className="flex-column justify-center bg-white p-2 rounded w-[content] h-[content] max-w-[1200px] md:h-[800px] relative ">
         <ListedItem itemInformation={content}></ListedItem>
         <div className="absolute top-1 right-1">
           <Button

@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect} from "react";
 
 import CarouselComponent from "../../components/CarouselComponent";
 import Item from "../../components/Item";
-import { listedItem } from "../../interfaces/interfaces";
-import { Button, Pagination, Modal } from "flowbite-react";
+import {listedItem} from "../../interfaces/interfaces";
+import {Button} from "flowbite-react";
 
 import axios from "axios";
 import ModalComponent from "../../components/modalcomponents/ModalComponent";
+import ShoppingCart from "../../components/shoppingcart/ShoppingCart";
 
 interface Props {}
 
@@ -24,6 +25,7 @@ const Home: React.FunctionComponent<Props> = () => {
     owner: "",
     imageurls: [],
   });
+  const [toggleCart, setToggleCart] = useState(false);
 
   const postsPerPage = 6;
 
@@ -32,11 +34,9 @@ const Home: React.FunctionComponent<Props> = () => {
   }, []);
 
   const fetchItemData = async (next: number) => {
-    axios
-      .get("http://localhost:3001/getItems", { params: { next } })
-      .then((response) => {
-        setItems(response.data);
-      });
+    axios.get("http://localhost:3001/getItems", {params: {next}}).then((response) => {
+      setItems(response.data);
+    });
   };
 
   const handlePagination = (numOfPages: number) => {
@@ -54,7 +54,12 @@ const Home: React.FunctionComponent<Props> = () => {
 
   return (
     <div className="w-[97%]">
-      <CarouselComponent></CarouselComponent>
+      <ShoppingCart toggle={toggleCart}></ShoppingCart>
+
+      <Button onClick={() => setToggleCart(!toggleCart)}></Button>
+      <div className="flex justify-center">
+        <CarouselComponent></CarouselComponent>
+      </div>
       <div className="flex justify-center mt-5">
         <Button
           color="dark"
@@ -76,7 +81,7 @@ const Home: React.FunctionComponent<Props> = () => {
       </div>
       <div className="flex justify-center my-5">
         <div className="flex justify-center">
-          <div className="w-[95%] max-w-5xl border-2 rounded-lg flex flex-wrap gap-x-6 gap-y-6 justify-center content-start p-2 shadow-sm">
+          <div className="w-[95%] max-w-5xl border-2 rounded-lg flex flex-wrap gap-y-3 justify-center content-start p-2 shadow-sm">
             {items?.map((item, id) => {
               return (
                 <div
@@ -100,11 +105,7 @@ const Home: React.FunctionComponent<Props> = () => {
       </div>
       <div className="flex justify-center mb-5">
         <div className="mr-5">
-          <Button
-            outline={true}
-            color="light"
-            onClick={() => handlePagination(-postsPerPage)}
-          >
+          <Button outline={true} color="light" onClick={() => handlePagination(-postsPerPage)}>
             Edellinen sivu
           </Button>
         </div>
@@ -114,7 +115,7 @@ const Home: React.FunctionComponent<Props> = () => {
           </Button>
         </div>
       </div>
-      <div>
+      <div className="w-fit">
         <ModalComponent
           visible={visible}
           setVisible={setVisible}
