@@ -1,14 +1,10 @@
-import { ChangeEvent, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import {ChangeEvent, useState} from "react";
+import {useNavigate} from "react-router-dom";
 
-import { initializeApp } from "firebase/app";
-import {
-  getAuth,
-  onAuthStateChanged,
-  signInWithEmailAndPassword,
-} from "firebase/auth";
-import { firebaseConfig } from "../../firebase/firebase";
-import { Button, Label, TextInput } from "flowbite-react";
+import {initializeApp} from "firebase/app";
+import {getAuth, onAuthStateChanged, signInWithEmailAndPassword} from "firebase/auth";
+import {firebaseConfig} from "../../firebase/firebase";
+import {Button, Label, TextInput} from "flowbite-react";
 import emailIcon from "../images/envelope.png";
 
 const app = initializeApp(firebaseConfig);
@@ -24,17 +20,10 @@ const LoginForm: React.FunctionComponent<LoginFormProps> = () => {
   const [email, setEmail] = useState<string>("");
   const [pw, setPw] = useState<string>("");
 
-  const [user, setUser] = useState<string>("");
   const [error, setError] = useState<boolean>(false);
   const [errorMsg, setErrorMsg] = useState<string>(
     "Käyttäjätunnus tai salasana on väärä, kokeile uudestaan."
   );
-
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      setUser(user.uid);
-    }
-  });
 
   const onChangeEmail = (e: ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value;
@@ -50,6 +39,7 @@ const LoginForm: React.FunctionComponent<LoginFormProps> = () => {
     signInWithEmailAndPassword(auth, email, pw)
       .then((userCredential) => {
         const user = userCredential.user;
+        console.log(user);
         navigation("/");
       })
       .catch((error) => {
@@ -90,14 +80,12 @@ const LoginForm: React.FunctionComponent<LoginFormProps> = () => {
           <div className="pt-5">
             {error ? (
               <div>
-                <p style={{ color: "red", fontSize: 15, fontWeight: 500 }}>
-                  {errorMsg}
-                </p>
+                <p style={{color: "red", fontSize: 15, fontWeight: 500}}>{errorMsg}</p>
               </div>
             ) : (
               <Label htmlFor="remember">
                 Uusi käyttäjä?{" "}
-                <a href="register" style={{ color: "blue" }}>
+                <a href="register" style={{color: "blue"}}>
                   Rekisteröidy
                 </a>
               </Label>

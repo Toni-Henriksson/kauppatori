@@ -1,31 +1,23 @@
-import { useState, ChangeEvent } from "react";
-import { useNavigate } from "react-router-dom";
+import {useState, ChangeEvent} from "react";
+import {useNavigate} from "react-router-dom";
 import React from "react";
-import ReactDOM from "react-dom";
 
 import axios from "axios";
-import { getAuth } from "firebase/auth";
-import { imgUp } from "../../util/imageUpload";
+import {getAuth} from "firebase/auth";
+import {imgUp} from "../../util/imageUpload";
+import {v4 as uuidv4} from "uuid";
+import {getDate} from "../../util/helperfunctions";
 
-import {
-  Button,
-  TextInput,
-  Label,
-  Checkbox,
-  Textarea,
-  Select,
-  FileInput,
-} from "flowbite-react";
-import LoadingButton from "../../components/LoadingButton";
+import {Button, TextInput, Label, Checkbox, Textarea, Select, FileInput} from "flowbite-react";
+import LoadingButton from "../../components/static-ui-elements/LoadingButton";
 
-import {
-  checkStrongIdentification,
-  checkEmailVerified,
-} from "../../util/userVerificationFunctions";
+import {checkStrongIdentification, checkEmailVerified} from "../../util/userVerificationFunctions";
 
-interface NewListingProps {}
+interface NewListingProps {
+  userEmail: string;
+}
 
-const NewListing: React.FunctionComponent<NewListingProps> = () => {
+const NewListing: React.FunctionComponent<NewListingProps> = ({userEmail}) => {
   let navigation = useNavigate();
   const [images, setImages]: any = useState([]);
   const [imgUrls, setImgUrls] = useState([]);
@@ -54,15 +46,17 @@ const NewListing: React.FunctionComponent<NewListingProps> = () => {
     let verifiedEmail = checkEmailVerified();
 
     let urls = await imgUp(images).then((response) => {
+      let id = uuidv4();
       if (verified && verifiedEmail) {
         axios
           .post("http://localhost:3001/createListing", {
+            id: id,
             title: state.title,
             category: state.category,
             price: state.price,
             details: state.info,
-            date: "10.01.1992",
-            owner: "userEmail",
+            date: getDate(),
+            owner: userEmail,
             imageurls: response,
           })
           .then(() => {
@@ -153,10 +147,7 @@ const NewListing: React.FunctionComponent<NewListingProps> = () => {
             <Checkbox id="agree" />
             <Label htmlFor="agree">
               Hyväksyn{" "}
-              <a
-                href="/forms"
-                className="text-blue-600 hover:underline dark:text-blue-500"
-              >
+              <a href="/forms" className="text-blue-600 hover:underline dark:text-blue-500">
                 käyttöehdot
               </a>
             </Label>

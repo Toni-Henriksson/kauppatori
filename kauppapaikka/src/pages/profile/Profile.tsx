@@ -1,5 +1,3 @@
-import Navigation from "../../components/Navigation";
-
 interface Props {}
 
 const Profile: React.FunctionComponent<Props> = () => {

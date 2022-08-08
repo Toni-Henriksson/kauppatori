@@ -1,28 +1,21 @@
-import React, {useState} from "react";
-import {Navbar, Button, Dropdown, TextInput} from "flowbite-react";
+import {useState, useContext} from "react";
+import {Navbar, Button, Dropdown} from "flowbite-react";
 
 import {getAuth, onAuthStateChanged} from "firebase/auth";
 import {initializeApp} from "firebase/app";
-import {firebaseConfig} from "../firebase/firebase";
-import {useNavigate} from "react-router-dom";
-import {logout} from "../firebase/functions";
+import {firebaseConfig} from "../../firebase/firebase";
+import {logout} from "../../firebase/functions";
+
+import shoppingCart from "../../images/shopping-cart.png";
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-interface Props {}
+interface NavProps {}
 
-const Navigation: React.FunctionComponent<Props> = () => {
-  let navigation = useNavigate();
+export function Navigation() {
   const [userLoggedIn, setUserLoggedIn] = useState(false);
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      setUserLoggedIn(true);
-    }
-  });
-  const navigate = () => {
-    window.location.href = "profile";
-  };
+
   return (
     <div className="sticky top-0 z-50 shadow-md">
       <Navbar fluid={true} rounded={true}>
@@ -39,16 +32,21 @@ const Navigation: React.FunctionComponent<Props> = () => {
         </Navbar.Brand>
         {userLoggedIn ? (
           <div className="flex md:order-2 z-10">
+            <div className="flex flex-wrap items-center mr-2">
+              <Button size="md" onClick={() => "moi"}>
+                <img src={shoppingCart} alt="cart" style={{width: "20px"}}></img>
+              </Button>
+            </div>
             <div>
-              <Dropdown label="Profiili">
+              <Dropdown label="Profiili" size={"md"}>
                 <Dropdown.Header>
-                  <span className="block truncate text-sm font-medium">
+                  <span className="block truncate text-xs font-medium">
                     {auth.currentUser?.email}
                   </span>
                 </Dropdown.Header>
                 <Dropdown.Item
                   onClick={() => {
-                    navigate();
+                    window.location.href = "profile";
                   }}
                 >
                   Profiili
@@ -71,6 +69,6 @@ const Navigation: React.FunctionComponent<Props> = () => {
       </Navbar>
     </div>
   );
-};
+}
 
 export default Navigation;

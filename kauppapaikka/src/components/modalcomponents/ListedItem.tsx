@@ -96,15 +96,19 @@ const ListedItem: React.FunctionComponent<ListedItemProps> = ({itemInformation})
       </div>
 
       <div className="w-[40%] min-w-[350px] h-[40%] md:h-[100%]">
-        <div className="flex flex-row p-2">
-          <div className="w-[40%]">
-            <p className="text-md font-medium">{itemInformation.title}</p>
-            <p className="text-lg font-bold">{itemInformation.price}€</p>
+        <div className="flex flex-col p-1">
+          <div className="w-[100%] flex justify-center">
+            <p className="text-md md:text-xl font-medium">{itemInformation.title}</p>
           </div>
-          <div className="w-[60%]">
-            <div className="w-full h-[100px] md:h-[350px] border-2 bg-slate-100 p2">
+
+          <div className="w-[100%] h-3/4">
+            <div className="w-full h-full min-h-[170px] md:h-[350px] border-2 border-black p-2">
               <p>{itemInformation.details}</p>
             </div>
+          </div>
+
+          <div className="w-[100%] mt-2 flex justify-end pr-5">
+            <p className="text-2xl font-bold">{itemInformation.price}€</p>
           </div>
         </div>
       </div>

@@ -2,6 +2,10 @@ const mongoose = require('mongoose')
 mongoose.pluralize(null);
 
 const itemsDataSchema = new mongoose.mongoose.Schema({
+    id: {
+        type: String,
+        required: true,
+    },
     title: {
         type: String,
         required: true,

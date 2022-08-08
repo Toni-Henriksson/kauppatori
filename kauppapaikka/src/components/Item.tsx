@@ -2,52 +2,47 @@ interface Props {
   title: string;
   price: string;
   date: string;
+  details: string;
   imageurls: Array<any>;
 }
 
 const Item: React.FunctionComponent<Props> = (props: Props) => {
   return (
     <div
-      style={{
-        height: "100%",
-        width: "100%",
-        display: "flex",
-        flexDirection: "row",
-        padding: "2px",
-      }}
+      style={{height: "100%", width: "100%", display: "flex", flexDirection: "row", padding: "2px"}}
     >
-      <div style={{ height: "100%", width: "185px" }}>
+      <div className="w-[250px] h-[180px]">
         <img
           src={props.imageurls[0]}
           alt="..."
-          style={{ width: "100%", height: "100%" }}
+          className="object-cover w-[100%] h-[180px] md:h-[98%]"
         />
       </div>
-      <div
-        style={{
-          width: "30%",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "start",
-          paddingLeft: "10px",
-        }}
-      >
-        <h2>{props.title}</h2>
-        <h1>{props.price}€</h1>
-      </div>
-      <div
-        style={{
-          height: "100%",
-          width: "25%",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "end",
-          justifyContent: "center",
-        }}
-      >
-        <p>{props.date}</p>
-        <p>{props.date}</p>
-        <p>{props.date}</p>
+
+      <div className="w-[100%] h-[100%] flex flex-col p-1">
+        <div className="w-full flex flex-row">
+          <div className="w-3/4 h-1/4">
+            <p className="font-md text-md md:text-lg">{props.title}</p>
+          </div>
+          <div className="w-1/4">
+            <p className="font-bold text-md md:text-xl">{props.price}€</p>
+          </div>
+        </div>
+
+        <div className="w-full h-3/4">
+          <div className="w-full h-full bg-slate-100 flex flex-wrap">
+            <p className="text-sm md:text-lg">{props.details}</p>
+          </div>
+        </div>
+
+        <div className="w-full flex flex-row">
+          <div className="w-2/4">
+            <p className="text-xs">{props.date}</p>
+          </div>
+          <div className="w-2/4">
+            <p className="text-xs">{props.date}</p>
+          </div>
+        </div>
       </div>
     </div>
   );

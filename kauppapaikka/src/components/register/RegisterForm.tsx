@@ -1,8 +1,8 @@
-import { Button, Checkbox, Label, TextInput } from "flowbite-react";
-import { ChangeEvent, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { register } from "../../firebase/functions";
-import LoadingButton from "../LoadingButton";
+import {Button, Checkbox, Label, TextInput} from "flowbite-react";
+import {ChangeEvent, useState} from "react";
+import {useNavigate} from "react-router-dom";
+import {register} from "../../firebase/functions";
+import LoadingButton from "../static-ui-elements/LoadingButton";
 
 interface RegisterFormProps {}
 
@@ -89,10 +89,7 @@ const RegisterForm: React.FunctionComponent<RegisterFormProps> = () => {
           <Checkbox id="agree" required={true} />
           <Label htmlFor="agree">
             Rekisteröitymällä hyväksyn{" "}
-            <a
-              href="/forms"
-              className="text-blue-600 hover:underline dark:text-blue-500"
-            >
+            <a href="/forms" className="text-blue-600 hover:underline dark:text-blue-500">
               käyttöehdot.
             </a>
           </Label>
