@@ -1,8 +1,11 @@
-import {useState} from "react";
+import {Button} from "flowbite-react";
+import {useState, useContext} from "react";
 import noImageIcon from "../../images/noimage.png";
+import CartContext from "../../context/CartContext";
 
 interface ListedItemProps {
   itemInformation: {
+    id: string;
     title: string;
     price: string;
     details: string;
@@ -15,6 +18,19 @@ interface ListedItemProps {
 
 const ListedItem: React.FunctionComponent<ListedItemProps> = ({itemInformation}) => {
   const [selectedPicture, setSelectedPicture] = useState(itemInformation.imageurls[0]);
+  const {addItemToCart} = useContext(CartContext);
+
+  // For calling usecontext function, it requires data this way
+  const itemobj = {
+    title: itemInformation.title,
+    id: itemInformation.id,
+    category: itemInformation.category,
+    date: itemInformation.date,
+    details: itemInformation.details,
+    owner: itemInformation.owner,
+    price: itemInformation.price,
+    imageurls: itemInformation.imageurls,
+  };
 
   const handlePicSelection = (num: Number) => {
     switch (num) {
@@ -42,15 +58,19 @@ const ListedItem: React.FunctionComponent<ListedItemProps> = ({itemInformation})
   };
 
   return (
-    <div className="flex flex-row flex-wrap w-[100%] h-[100%] border-2">
-      <div className="w-[60%] min-w-[350px] h-[60%] md:h-[100%]">
-        <div className="w-[90%] h-[85%] m-1">
-          <div className="w-[350px] h-[350px] md:w-[98%] md:h-[98%] m-1 rounded flex justify-center bg-slate-100">
-            <img src={selectedPicture} className="object-cover w-[100%] h-[350px] md:h-[98%]"></img>
+    <div className="flex flex-row flex-wrap w-[100%] h-[100%]">
+      <div className="w-1/2 min-w-[350px] h-1/2 md:h-[100%]  bg-white rounded-md shadow-md flex-col p-1">
+        <div className="flex justify-center mb-1">
+          <p>{itemInformation.title}</p>
+          <p className="text-xl font-bold absolute left-5">{itemInformation.price}€</p>
+        </div>
+        <div className="w-[100%] h-[80%]">
+          <div className="w-full h-full md:w-[98%] md:h-[98%] rounded overflow-hidden">
+            <img src={selectedPicture} className="object-cover w-full h-full"></img>
           </div>
         </div>
 
-        <div className="flex flex-row w-[100%] h-[100px] justify-center gap-2">
+        <div className="flex flex-row w-[100%] h-[50px] justify-center gap-2">
           <div
             onClick={() => handlePicSelection(0)}
             className="max-w-[100px] w-[100px] h-full flex justify-center items-center border-2 rounded p-1 bg-slate-100"
@@ -95,20 +115,31 @@ const ListedItem: React.FunctionComponent<ListedItemProps> = ({itemInformation})
         </div>
       </div>
 
-      <div className="w-[40%] min-w-[350px] h-[40%] md:h-[100%]">
+      <div className="w-1/2 min-w-[350px] h-[40%] md:h-[100%]">
         <div className="flex flex-col p-1">
-          <div className="w-[100%] flex justify-center">
-            <p className="text-md md:text-xl font-medium">{itemInformation.title}</p>
-          </div>
-
-          <div className="w-[100%] h-3/4">
-            <div className="w-full h-full min-h-[170px] md:h-[350px] border-2 border-black p-2">
+          <div className="w-[100%] min-h-[150px] bg-white flex justify-center shadow-md p-2 rounded-md">
+            <div className="w-full h-full min-h-[170px] md:h-[350px] p-2">
               <p>{itemInformation.details}</p>
             </div>
           </div>
 
-          <div className="w-[100%] mt-2 flex justify-end pr-5">
-            <p className="text-2xl font-bold">{itemInformation.price}€</p>
+          <div className="w-[100%] mt-2 flex justify-end bg-white  shadow-md rounded-md">
+            <Button size={"sm"} onClick={() => addItemToCart(itemobj)}>
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
+                />
+              </svg>
+            </Button>
           </div>
         </div>
       </div>

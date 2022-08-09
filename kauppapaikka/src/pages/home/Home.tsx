@@ -4,9 +4,10 @@ import CarouselComponent from "../../components/static-ui-elements/CarouselCompo
 import {listedItem} from "../../interfaces/interfaces";
 import {Button} from "flowbite-react";
 
-import axios from "axios";
 import ModalComponent from "../../components/modalcomponents/ModalComponent";
 import ShoppingCart from "../../components/ShoppingCart";
+
+import axios from "axios";
 import CartContext from "../../context/CartContext";
 
 interface Props {}
@@ -23,6 +24,7 @@ const Home: React.FunctionComponent<Props> = () => {
   // Modal for full item details
   const [visible, setVisible] = useState(false);
   const [modalItem, setModalItem] = useState({
+    id: "",
     title: "",
     price: "",
     details: "",

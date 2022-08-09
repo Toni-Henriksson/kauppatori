@@ -2,8 +2,6 @@ import { useContext, useState, useEffect } from "react";
 import CartContext from "../../context/CartContext";
 import { logout } from "../../firebase/functions";
 
-import shoppingCartIcon from "../../images/shopping-cart.png";
-
 import { Button, Dropdown } from "flowbite-react";
 
 
