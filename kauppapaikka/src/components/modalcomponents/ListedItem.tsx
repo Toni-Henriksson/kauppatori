@@ -60,63 +60,34 @@ const ListedItem: React.FunctionComponent<ListedItemProps> = ({itemInformation})
   return (
     <div className="flex flex-row flex-wrap w-[100%] h-[100%]">
       <div className="w-1/2 min-w-[350px] h-1/2 md:h-[100%]  bg-white rounded-md shadow-md flex-col p-1">
-        <div className="flex justify-center mb-1">
-          <p>{itemInformation.title}</p>
-          <p className="text-xl font-bold absolute left-5">{itemInformation.price}€</p>
-        </div>
-        <div className="w-[100%] h-[80%]">
-          <div className="w-full h-full md:w-[98%] md:h-[98%] rounded overflow-hidden">
+        <div className="w-[100%] h-[75%]">
+          <div className="flex justify-center mb-1 bg-sky-300">
+            <p>{itemInformation.title}</p>
+            <p className="text-xl font-bold absolute left-5">{itemInformation.price}€</p>
+          </div>
+          <div className="w-full h-full overflow-hidden xl:aspect-w-7 xl:aspect-h-8">
             <img src={selectedPicture} className="object-cover w-full h-full"></img>
           </div>
-        </div>
 
-        <div className="flex flex-row w-[100%] h-[50px] justify-center gap-2">
-          <div
-            onClick={() => handlePicSelection(0)}
-            className="max-w-[100px] w-[100px] h-full flex justify-center items-center border-2 rounded p-1 bg-slate-100"
-          >
-            {itemInformation.imageurls[0] ? (
-              <img
-                src={itemInformation.imageurls[0]}
-                className="w-full h-full object-scale-down"
-              ></img>
-            ) : (
-              <h1>X</h1>
-            )}
-          </div>
-
-          <div
-            onClick={() => handlePicSelection(1)}
-            className="max-w-[100px] w-[100px] h-full flex justify-center items-center  border-2 rounded p-1 bg-slate-100"
-          >
-            {itemInformation.imageurls[1] ? (
-              <img
-                src={itemInformation.imageurls[1]}
-                className="w-full h-full object-scale-down"
-              ></img>
-            ) : (
-              <h1>X</h1>
-            )}
-          </div>
-
-          <div
-            onClick={() => handlePicSelection(2)}
-            className="max-w-[100px] w-[100px] h-full flex justify-center items-center  border-2 rounded p-1 bg-slate-100"
-          >
-            {itemInformation.imageurls[2] ? (
-              <img
-                src={itemInformation.imageurls[2]}
-                className="w-full h-full object-scale-down"
-              ></img>
-            ) : (
-              <h1>X</h1>
-            )}
+          <div className="flex flex-row  h-[18%] md:h-[13%] mt-1 justify-center gap-x-2">
+            {itemInformation.imageurls.map((item, key) => {
+              return (
+                <div
+                  key={key}
+                  onClick={() => handlePicSelection(key)}
+                  className="w-[60px] md:w-[80px] h-full"
+                >
+                  <img src={item} className="w-full h-full"></img>
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>
 
-      <div className="w-1/2 min-w-[350px] h-[40%] md:h-[100%]">
+      <div className="w-1/2 min-w-[350px] h-1/2 md:h-[100%]">
         <div className="flex flex-col p-1">
+          <span className="p-1 self-center">Lisätietoja</span>
           <div className="w-[100%] min-h-[150px] bg-white flex justify-center shadow-md p-2 rounded-md">
             <div className="w-full h-full min-h-[170px] md:h-[350px] p-2">
               <p>{itemInformation.details}</p>
